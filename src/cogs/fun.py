@@ -236,7 +236,15 @@ class Fun(commands.Cog, name="Funny"):
         embed.set_image(url="attachment://image.png")
 
         await ctx.send(file=file, embed=embed)
-
+        
+    async def getimage(self, ctx, link: str, keyword: str):
+        image = discord.Embed()
+        image.set_image(url=requests.get(link).json()[keyword])
+        await ctx.send(embed=image)  
+        
+    @commands.command()
+    async def panda(self, ctx):
+        await self.getimage(ctx, 'https://some-random-api.ml/img/panda', 'link')
 
 def setup(bot):
     bot.add_cog(Fun(bot))
